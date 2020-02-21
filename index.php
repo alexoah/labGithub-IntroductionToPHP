@@ -5,9 +5,10 @@
   </head>
   <body>
     <?php
-    // Using two forward slashes we create comments in php.
-    // Within the php tag, we can insert values into our HTML.
-	
+		/*
+			Coded by: alexoah.
+			Updated: 20200221.
+		*/
 		$name = "PHP Store";
 		$credit = 1000;
 		
@@ -19,30 +20,28 @@
 		$products['iPhone'] = 1000;
 		$products['Toaster'] = 75;
 		
-		foreach($products as $key => $value) {
-			echo "<p> ".$key." costs ".$value."<p/>";
-		}
-		
-		echo "<h2>Items you can afford:</h2>";
-		foreach($products as $key => $value) {
-			if($value <= $credit) {
-				echo "<p>".$key."</p>";
-			}
-		}
-		
-		// Using Math part.
-		$amount = 800;
-		$taxRate = 0.0825;
-		$addedTax = $amount * $taxRate; // 800 * 0.0825
-		echo $addedTax;
-		
 		// Added a function for calculating tax.
 		function tax_calc($amount, $tax) {
-			$calculate_tax = $amount * $tax;
-			$amount = round($amount+$calculate_tax, 2);
-			return $amount;
+			return round($amount*(1 + $tax), 2);
 		}
-		echo tax_calc(750, 0.223);
+		
+		$taxRate = 0.0825;
+    echo "<p>";
+		foreach($products as $key => $value) {
+			$costWithTax = tax_calc($value, $taxRate);
+			echo "- The ".$key." costs ".$costWithTax."<br/>";
+		}
+    echo "</p>";
+
+		echo "<h2>Items you can afford:</h2>";
+    echo "<p>";
+		foreach($products as $key => $value) {
+			$costWithTax = tax_calc($value, $taxRate);
+			if($costWithTax <= $credit) {
+				echo "- ".$key."<br/>";
+			}
+		}
+    echo "</p>";
     ?>
   </body>
 </html>
